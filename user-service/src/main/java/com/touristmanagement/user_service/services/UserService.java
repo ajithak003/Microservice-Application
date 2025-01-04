@@ -3,6 +3,7 @@ package com.touristmanagement.user_service.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.touristmanagement.user_service.exceptions.ResourceNotFoundException;
@@ -22,13 +23,15 @@ public class UserService {
 		this.userDAO = userDAO;
 	}
 	
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+	
 	public void createUser(UserRequest userRequest) {
 		
 		User user = new User();	
 		user.setEmailId(userRequest.getEmailId());
 		user.setMobileNo(userRequest.getMobileNo());
 		user.setName(userRequest.getName());
-		user.setPassword(userRequest.getPassword());
+		user.setPassword(encoder.encode(userRequest.getPassword()));
 		try {
 		userDAO.save(user);
 		}catch(Exception e){
