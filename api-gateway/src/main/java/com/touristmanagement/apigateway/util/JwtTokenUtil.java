@@ -37,7 +37,6 @@ public class JwtTokenUtil {
 		String username = claims.getSubject();
 		System.out.println("Username : "+ username);
 		
-
 	}
 
 	private Claims extractAllClaims(String token) {
